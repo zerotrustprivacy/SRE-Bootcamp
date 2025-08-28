@@ -3,161 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Krusty Krab Krew Bootcamp</title>
+    <title>The Powerpuff SRE Bootcamp</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        @keyframes bubbles {
-            0% {
-                transform: translateY(0);
-                opacity: 0;
-            }
-            10%, 90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh);
-                opacity: 0;
-            }
-        }
-        .bubble {
-            position: absolute;
-            bottom: -100px;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            animation: bubbles linear infinite;
-        }
-        .bubble:nth-child(1) { left: 10%; animation-duration: 15s; }
-        .bubble:nth-child(2) { left: 20%; animation-duration: 7s; animation-delay: 2s; width: 20px; height: 20px; }
-        .bubble:nth-child(3) { left: 35%; animation-duration: 10s; animation-delay: 4s; }
-        .bubble:nth-child(4) { left: 50%; animation-duration: 8s; animation-delay: 0s; width: 30px; height: 30px; }
-        .bubble:nth-child(5) { left: 65%; animation-duration: 12s; animation-delay: 6s; }
-        .bubble:nth-child(6) { left: 80%; animation-duration: 9s; animation-delay: 1s; width: 25px; height: 25px; }
-
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to top, #00c6ff, #0072ff);
-            overflow-x: hidden;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 40"><path fill="%23fecaca" fill-opacity="0.4" d="M0 40a40 40 0 0 1 40-40 40 40 0 0 1 40 40H0zM40 0a40 40 0 0 1-40 40V0h40z"></path></svg>'), 
+                              linear-gradient(to bottom right, #fbcfe8, #a5f3fc);
+            background-size: 80px, 100%;
+            overflow-x: hidden; /* Hide horizontal scrollbar caused by animations */
         }
         h1, h2, h3 {
-            font-family: 'Luckiest Guy', cursive;
+            font-family: 'Bangers', cursive;
+            letter-spacing: 2px;
         }
         .timeline-card {
-            transition: transform 0.3s ease;
-            border: 3px solid #333;
-            box-shadow: 5px 5px 0px #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 4px solid black;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
         }
         .timeline-card:hover {
-            transform: translateY(-8px) translateX(4px);
-            box-shadow: 2px 2px 0px #333;
+            transform: rotate(2deg) scale(1.05);
+            box-shadow: 10px 10px 0px black;
         }
         .timeline-dot {
-            border: 3px solid #333;
+            border: 4px solid black;
             transition: transform 0.3s ease;
         }
         .timeline-dot:hover {
-            transform: rotate(360deg);
+            transform: scale(1.2) rotate(-15deg);
         }
         
-        .bg-phase-1 { background-color: #fefcbf; /* Spongebob Yellow */ }
-        .border-phase-1 { border-color: #d9534f; /* Krabs Red */ }
-        .text-phase-1 { color: #d9534f; }
+        .bg-blossom { background-color: #f472b6; } /* Pink */
+        .border-blossom { border-color: #f472b6; }
+        
+        .bg-bubbles { background-color: #38bdf8; } /* Blue */
+        .border-bubbles { border-color: #38bdf8; }
 
-        .bg-phase-2 { background-color: #ffc0cb; /* Patrick Pink */ }
-        .border-phase-2 { border-color: #5cb85c; /* Patrick's Shorts Green */ }
-        .text-phase-2 { color: #5cb85c; }
+        .bg-buttercup { background-color: #4ade80; } /* Green */
+        .border-buttercup { border-color: #4ade80; }
 
-        .bg-phase-3 { background-color: #add8e6; /* Squidward Blue */ }
-        .border-phase-3 { border-color: #a0825f; /* Squidward Brown */ }
-        .text-phase-3 { color: #a0825f; }
+        .bg-mojo { background-color: #a3e635; } /* Mojo Green */
+        .border-mojo { border-color: #a3e635; }
 
-        .bg-phase-4 { background-color: #f0ad4e; /* Sandy Orange */ }
-        .border-phase-4 { border-color: #967bb6; /* Sandy Purple */ }
-        .text-phase-4 { color: #967bb6; }
+        .bg-professor { background-color: #a78bfa; } /* Purple */
+        .border-professor { border-color: #a78bfa; }
 
-        .bg-phase-5 { background-color: #a9a9a9; /* Plankton Gray */ }
-        .border-phase-5 { border-color: #333; }
-        .text-phase-5 { color: #333; }
+        /* --- Animated Streaks --- */
+        .streak {
+            position: absolute;
+            height: 8px;
+            width: 300px;
+            border-radius: 4px;
+            filter: blur(4px);
+        }
+
+        #blossom-streak {
+            background: #f472b6;
+            box-shadow: 0 0 15px #f472b6, 0 0 30px #f472b6;
+            top: 15%;
+            animation: streak-across 4s ease-in-out infinite;
+        }
+        #bubbles-streak {
+            background: #38bdf8;
+            box-shadow: 0 0 15px #38bdf8, 0 0 30px #38bdf8;
+            top: 50%;
+            animation: streak-across 3.5s ease-in-out infinite 1s;
+        }
+        #buttercup-streak {
+            background: #4ade80;
+            box-shadow: 0 0 15px #4ade80, 0 0 30px #4ade80;
+            top: 85%;
+            animation: streak-across-reverse 4.5s ease-in-out infinite 0.5s;
+        }
+
+        @keyframes streak-across {
+            0% { left: -350px; opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { left: 110%; opacity: 0; }
+        }
+        
+        @keyframes streak-across-reverse {
+            0% { right: -350px; opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { right: 110%; opacity: 0; }
+        }
+
     </style>
 </head>
-<body class="text-slate-800">
-    <div class="bubbles">
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-        <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-    </div>
+<body class="text-slate-900">
+
+    <!-- Animated Streaks -->
+    <div id="blossom-streak" class="streak"></div>
+    <div id="bubbles-streak" class="streak"></div>
+    <div id="buttercup-streak" class="streak"></div>
 
     <div class="relative container mx-auto px-4 py-12 md:py-20 z-10">
 
         <header class="text-center mb-12 md:mb-20">
-            <h1 class="text-5xl md:text-7xl font-bold text-yellow-300 tracking-wider" style="text-shadow: 3px 3px 0px #333, -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333;">The Krusty Krew Bootcamp</h1>
-            <p class="mt-4 text-xl text-white max-w-3xl mx-auto" style="font-family: 'Poppins', sans-serif; text-shadow: 2px 2px 2px rgba(0,0,0,0.4);">Are ya ready, kids?! Time to learn the secret formula for SRE success!</p>
+            <h1 class="text-6xl md:text-8xl text-white" style="text-shadow: 5px 5px 0px #000;">SRE BOOTCAMP!</h1>
+            <p class="mt-4 text-2xl text-black max-w-3xl mx-auto" style="font-family: 'Bangers', cursive; letter-spacing: 1px;">Saving the World of Tech Before Bedtime!</p>
         </header>
 
         <div class="relative wrap overflow-hidden p-10 h-full">
-            <div class="absolute border-opacity-20 border-black h-full border-2 border-dashed" style="left: 50%"></div>
+            <div class="absolute border-black h-full border-4" style="left: 50%"></div>
 
-            <!-- Phase 1: Fry Cook Fundamentals -->
+            <!-- Phase 1: Sugar, Spice, & Everything Nice -->
             <div class="mb-8 flex justify-between items-center w-full right-timeline">
                 <div class="order-1 w-5/12"></div>
-                <div class="z-20 flex items-center order-1 bg-phase-1 shadow-xl w-20 h-20 rounded-full timeline-dot">
-                    <h2 class="mx-auto font-semibold text-4xl text-black">1</h2>
+                <div class="z-20 flex items-center order-1 bg-blossom shadow-xl w-24 h-24 rounded-full timeline-dot">
+                    <h2 class="mx-auto text-5xl text-black">1</h2>
                 </div>
-                <div class="order-1 bg-white rounded-lg w-5/12 p-6 timeline-card border-phase-1">
-                    <h3 class="font-bold text-slate-800 text-2xl mb-3">Fry Cook Fundamentals</h3>
-                    <p class="text-sm leading-snug tracking-wide text-slate-600">Learning to make the perfect Krabby Patty (container) with Docker and storing the secret ingredients in Mr. Krabs' vault (ACR).</p>
+                <div class="order-1 bg-white w-5/12 p-6 timeline-card border-blossom">
+                    <h3 class="text-3xl mb-3 text-blossom">Sugar, Spice, & Everything Nice</h3>
+                    <p class="font-semibold text-sm leading-snug tracking-wide">Mixing the perfect ingredients (apps) into a powerful concoction (container) with Docker and storing it in the Professor's lab (ACR).</p>
                 </div>
             </div>
 
-            <!-- Phase 2: Jellyfishing with Kubernetes -->
+            <!-- Phase 2: Chemical X! -->
             <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
                 <div class="order-1 w-5/12"></div>
-                <div class="z-20 flex items-center order-1 bg-phase-2 shadow-xl w-20 h-20 rounded-full timeline-dot">
-                    <h2 class="mx-auto text-black font-semibold text-4xl">2</h2>
+                <div class="z-20 flex items-center order-1 bg-bubbles shadow-xl w-24 h-24 rounded-full timeline-dot">
+                    <h2 class="mx-auto text-black text-5xl">2</h2>
                 </div>
-                <div class="order-1 bg-white rounded-lg w-5/12 p-6 timeline-card border-phase-2">
-                    <h3 class="font-bold text-slate-800 text-2xl mb-3">Jellyfishing with Kubernetes</h3>
-                    <p class="text-sm leading-snug tracking-wide text-slate-600">Catching a whole swarm of jellyfish (containers) with your AKS net. Firmly grasp it! Mastering Pods, Services, & Deployments.</p>
+                <div class="order-1 bg-white w-5/12 p-6 timeline-card border-bubbles">
+                    <h3 class="text-3xl mb-3 text-bubbles">Chemical X!</h3>
+                    <p class="font-semibold text-sm leading-snug tracking-wide">Unleashing the awesome power of Kubernetes! Giving your containers superpowers to work together and save the City of Townsville (your app).</p>
                 </div>
             </div>
             
-            <!-- Phase 3: Squidward's Clarinet -->
+            <!-- Phase 3: The Hotline -->
             <div class="mb-8 flex justify-between items-center w-full right-timeline">
                 <div class="order-1 w-5/12"></div>
-                <div class="z-20 flex items-center order-1 bg-phase-3 shadow-xl w-20 h-20 rounded-full timeline-dot">
-                    <h2 class="mx-auto font-semibold text-4xl text-black">3</h2>
+                <div class="z-20 flex items-center order-1 bg-buttercup shadow-xl w-24 h-24 rounded-full timeline-dot">
+                    <h2 class="mx-auto font-semibold text-5xl text-black">3</h2>
                 </div>
-                <div class="order-1 bg-white rounded-lg w-5/12 p-6 timeline-card border-phase-3">
-                    <h3 class="font-bold text-slate-800 text-2xl mb-3">Squidward's Clarinet</h3>
-                    <p class="text-sm leading-snug tracking-wide text-slate-600">Using Dynatrace to finally play a beautiful song (observe your cluster), hitting all the right notes with SLOs and tracing.</p>
+                <div class="order-1 bg-white w-5/12 p-6 timeline-card border-buttercup">
+                    <h3 class="text-3xl mb-3 text-buttercup">The Hotline</h3>
+                    <p class="font-semibold text-sm leading-snug tracking-wide">Knowing when there's trouble! Using Dynatrace to get the call from the Mayor, setting up SLOs so you know when a monster is attacking.</p>
                 </div>
             </div>
 
-            <!-- Phase 4: Karate with Sandy -->
+            <!-- Phase 4: Fighting Mojo Jojo -->
             <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
                 <div class="order-1 w-5/12"></div>
-                <div class="z-20 flex items-center order-1 bg-phase-4 shadow-xl w-20 h-20 rounded-full timeline-dot">
-                    <h2 class="mx-auto text-black font-semibold text-4xl">4</h2>
+                <div class="z-20 flex items-center order-1 bg-mojo shadow-xl w-24 h-24 rounded-full timeline-dot">
+                    <h2 class="mx-auto text-black text-5xl">4</h2>
                 </div>
-                <div class="order-1 bg-white rounded-lg w-5/12 p-6 timeline-card border-phase-4">
-                    <h3 class="font-bold text-slate-800 text-2xl mb-3">Karate with Sandy</h3>
-                    <p class="text-sm leading-snug tracking-wide text-slate-600">Putting your app through a Texas-style stress test with k6 and practicing some Ka-Ra-Te (Chaos Engineering) to make it stronger.</p>
+                <div class="order-1 bg-white w-5/12 p-6 timeline-card border-mojo">
+                    <h3 class="text-3xl mb-3 text-mojo">Fighting Mojo Jojo</h3>
+                    <p class="font-semibold text-sm leading-snug tracking-wide">It's time for an all-out brawl! Simulating a giant robot attack with k6 and practicing your chaos engineering moves to prove you're tough enough.</p>
                 </div>
             </div>
 
-            <!-- Phase 5: Plankton's Evil Plans -->
+            <!-- Phase 5: The Powerpuff Girls! -->
             <div class="mb-8 flex justify-between items-center w-full right-timeline">
                 <div class="order-1 w-5/12"></div>
-                <div class="z-20 flex items-center order-1 bg-phase-5 shadow-xl w-20 h-20 rounded-full timeline-dot">
-                    <h2 class="mx-auto font-semibold text-4xl text-white">5</h2>
+                <div class="z-20 flex items-center order-1 bg-professor shadow-xl w-24 h-24 rounded-full timeline-dot">
+                    <h2 class="mx-auto font-semibold text-5xl text-black">5</h2>
                 </div>
-                <div class="order-1 bg-white rounded-lg w-5/12 p-6 timeline-card border-phase-5">
-                    <h3 class="font-bold text-slate-800 text-2xl mb-3">Plankton's Evil Plans</h3>
-                    <p class="text-sm leading-snug tracking-wide text-slate-600">Using the genius of Terraform, Ansible, and GitOps to build a master plan that automates your entire Chum Bucket... I mean, Krusty Krab!</p>
+                <div class="order-1 bg-white w-5/12 p-6 timeline-card border-professor">
+                    <h3 class="text-3xl mb-3 text-professor">The Powerpuff Girls!</h3>
+                    <p class="font-semibold text-sm leading-snug tracking-wide">Combining your powers! Using Terraform, Ansible, and GitOps to create an unstoppable, automated force for good and protect the world from evil villains.</p>
                 </div>
             </div>
         </div>
