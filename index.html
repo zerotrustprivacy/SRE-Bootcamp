@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Krusty Krab Krew Bootcamp</title>
+    <title>The Krusty Krew Bootcamp</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,25 +11,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         @keyframes bubbles {
-            0% {
-                transform: translateY(0);
-                opacity: 0;
-            }
-            10%, 90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh);
-                opacity: 0;
-            }
+            0% { transform: translateY(0); opacity: 0; }
+            10%, 90% { opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
         }
         .bubble {
-            position: absolute;
-            bottom: -100px;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
+            position: absolute; bottom: -100px; width: 40px; height: 40px;
+            background: rgba(255, 255, 255, 0.2); border-radius: 50%;
             animation: bubbles linear infinite;
         }
         .bubble:nth-child(1) { left: 10%; animation-duration: 15s; }
@@ -44,45 +32,53 @@
             background: linear-gradient(to top, #00c6ff, #0072ff);
             overflow-x: hidden;
         }
-        h1, h2, h3 {
-            font-family: 'Luckiest Guy', cursive;
+        h1, h2, h3, h4 { font-family: 'Luckiest Guy', cursive; }
+        
+        /* Flip Card Styles */
+        .timeline-card-container {
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .timeline-card-inner {
+            position: relative;
+            width: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .is-flipped .timeline-card-inner {
+            transform: rotateY(180deg);
         }
         .timeline-card {
-            transition: transform 0.3s ease;
+            width: 100%;
+            min-height: 150px; /* Ensure cards have a consistent height */
+            backface-visibility: hidden;
             border: 3px solid #333;
             box-shadow: 5px 5px 0px #333;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
         }
-        .timeline-card:hover {
-            transform: translateY(-8px) translateX(4px);
-            box-shadow: 2px 2px 0px #333;
+        .timeline-card-front {
+            background-color: white;
         }
+        .timeline-card-back {
+            background-color: white;
+            transform: rotateY(180deg);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
         .timeline-dot {
             border: 3px solid #333;
             transition: transform 0.3s ease;
         }
-        .timeline-dot:hover {
-            transform: rotate(360deg);
-        }
+        .timeline-dot:hover { transform: rotate(360deg); }
         
-        .bg-phase-1 { background-color: #fefcbf; /* Spongebob Yellow */ }
-        .border-phase-1 { border-color: #d9534f; /* Krabs Red */ }
-        .text-phase-1 { color: #d9534f; }
-
-        .bg-phase-2 { background-color: #ffc0cb; /* Patrick Pink */ }
-        .border-phase-2 { border-color: #5cb85c; /* Patrick's Shorts Green */ }
-        .text-phase-2 { color: #5cb85c; }
-
-        .bg-phase-3 { background-color: #add8e6; /* Squidward Blue */ }
-        .border-phase-3 { border-color: #a0825f; /* Squidward Brown */ }
-        .text-phase-3 { color: #a0825f; }
-
-        .bg-phase-4 { background-color: #f0ad4e; /* Sandy Orange */ }
-        .border-phase-4 { border-color: #967bb6; /* Sandy Purple */ }
-        .text-phase-4 { color: #967bb6; }
-
-        .bg-phase-5 { background-color: #a9a9a9; /* Plankton Gray */ }
-        .border-phase-5 { border-color: #333; }
-        .text-phase-5 { color: #333; }
+        .bg-phase-1 { background-color: #fefcbf; } .border-phase-1 { border-color: #d9534f; }
+        .bg-phase-2 { background-color: #ffc0cb; } .border-phase-2 { border-color: #5cb85c; }
+        .bg-phase-3 { background-color: #add8e6; } .border-phase-3 { border-color: #a0825f; }
+        .bg-phase-4 { background-color: #f0ad4e; } .border-phase-4 { border-color: #967bb6; }
+        .bg-phase-5 { background-color: #a9a9a9; } .border-phase-5 { border-color: #333; }
     </style>
 </head>
 <body class="text-slate-800">
@@ -92,7 +88,6 @@
     </div>
 
     <div class="relative container mx-auto px-4 py-12 md:py-20 z-10">
-
         <header class="text-center mb-12 md:mb-20">
             <h1 class="text-5xl md:text-7xl font-bold text-yellow-300 tracking-wider" style="text-shadow: 3px 3px 0px #333, -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333;">The Krusty Krew Bootcamp</h1>
             <p class="mt-4 text-xl text-white max-w-3xl mx-auto" style="font-family: 'Poppins', sans-serif; text-shadow: 2px 2px 2px rgba(0,0,0,0.4);">Are ya ready, kids?! Time to learn the secret formula for SRE success!</p>
@@ -107,9 +102,24 @@
                 <div class="z-20 flex items-center order-1 bg-phase-1 shadow-xl w-20 h-20 rounded-full timeline-dot">
                     <h2 class="mx-auto font-semibold text-4xl text-black">1</h2>
                 </div>
-                <div class="order-1 bg-white rounded-lg w-5/12 p-6 timeline-card border-phase-1">
-                    <h3 class="font-bold text-slate-800 text-2xl mb-3">Fry Cook Fundamentals</h3>
-                    <p class="text-sm leading-snug tracking-wide text-slate-600">Learning to make the perfect Krabby Patty (container) with Docker and storing the secret ingredients in Mr. Krabs' vault (ACR).</p>
+                <div class="order-1 w-5/12 timeline-card-container">
+                    <div class="timeline-card-inner">
+                        <div class="timeline-card timeline-card-front border-phase-1">
+                            <h3 class="font-bold text-slate-800 text-2xl mb-2">Fry Cook Fundamentals</h3>
+                            <p class="text-sm leading-snug text-slate-600">Learning to make the perfect Krabby Patty (container) with Docker.</p>
+                            <p class="text-xs text-center mt-4 font-bold opacity-60">Click to Flip!</p>
+                        </div>
+                        <div class="timeline-card timeline-card-back border-phase-1">
+                            <h4 class="font-bold text-lg mb-2">The Secret Formula:</h4>
+                             <ul class="text-xs list-disc list-inside text-slate-700 space-y-1">
+                                <li>Write a `Dockerfile` for a simple app.</li>
+                                <li>Build an image with `docker build`.</li>
+                                <li>Run the container locally.</li>
+                                <li>Set up Azure Container Registry (ACR).</li>
+                                <li>Push your image to ACR with `docker push`.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -119,9 +129,24 @@
                 <div class="z-20 flex items-center order-1 bg-phase-2 shadow-xl w-20 h-20 rounded-full timeline-dot">
                     <h2 class="mx-auto text-black font-semibold text-4xl">2</h2>
                 </div>
-                <div class="order-1 bg-white rounded-lg w-5/12 p-6 timeline-card border-phase-2">
-                    <h3 class="font-bold text-slate-800 text-2xl mb-3">Jellyfishing with Kubernetes</h3>
-                    <p class="text-sm leading-snug tracking-wide text-slate-600">Catching a whole swarm of jellyfish (containers) with your AKS net. Firmly grasp it! Mastering Pods, Services, & Deployments.</p>
+                 <div class="order-1 w-5/12 timeline-card-container">
+                    <div class="timeline-card-inner">
+                        <div class="timeline-card timeline-card-front border-phase-2">
+                            <h3 class="font-bold text-slate-800 text-2xl mb-2">Jellyfishing with Kubernetes</h3>
+                            <p class="text-sm leading-snug text-slate-600">Catching a whole swarm of jellyfish (containers) with your AKS net.</p>
+                             <p class="text-xs text-center mt-4 font-bold opacity-60">Click to Flip!</p>
+                        </div>
+                        <div class="timeline-card timeline-card-back border-phase-2">
+                            <h4 class="font-bold text-lg mb-2">Ol' Reliable's Guide:</h4>
+                             <ul class="text-xs list-disc list-inside text-slate-700 space-y-1">
+                                <li>Learn Pods, Services, & Deployments.</li>
+                                <li>Deploy an Azure Kubernetes Service (AKS) cluster.</li>
+                                <li>Write a `deployment.yaml` manifest.</li>
+                                <li>Apply it with `kubectl apply`.</li>
+                                <li>Expose your app with a LoadBalancer.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -131,9 +156,24 @@
                 <div class="z-20 flex items-center order-1 bg-phase-3 shadow-xl w-20 h-20 rounded-full timeline-dot">
                     <h2 class="mx-auto font-semibold text-4xl text-black">3</h2>
                 </div>
-                <div class="order-1 bg-white rounded-lg w-5/12 p-6 timeline-card border-phase-3">
-                    <h3 class="font-bold text-slate-800 text-2xl mb-3">Squidward's Clarinet</h3>
-                    <p class="text-sm leading-snug tracking-wide text-slate-600">Using Dynatrace to finally play a beautiful song (observe your cluster), hitting all the right notes with SLOs and tracing.</p>
+                <div class="order-1 w-5/12 timeline-card-container">
+                    <div class="timeline-card-inner">
+                        <div class="timeline-card timeline-card-front border-phase-3">
+                            <h3 class="font-bold text-slate-800 text-2xl mb-2">Squidward's Clarinet</h3>
+                            <p class="text-sm leading-snug text-slate-600">Using Dynatrace to finally play a beautiful song (observe your cluster).</p>
+                             <p class="text-xs text-center mt-4 font-bold opacity-60">Click to Flip!</p>
+                        </div>
+                        <div class="timeline-card timeline-card-back border-phase-3">
+                             <h4 class="font-bold text-lg mb-2">Music Sheet:</h4>
+                             <ul class="text-xs list-disc list-inside text-slate-700 space-y-1">
+                                <li>Deploy the Dynatrace Operator to AKS.</li>
+                                <li>Confirm Pods are being monitored.</li>
+                                <li>Create a service-level SLO for latency.</li>
+                                <li>Analyze a PurePath (distributed trace).</li>
+                                <li>Find an error log in the Log Viewer.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -143,9 +183,24 @@
                 <div class="z-20 flex items-center order-1 bg-phase-4 shadow-xl w-20 h-20 rounded-full timeline-dot">
                     <h2 class="mx-auto text-black font-semibold text-4xl">4</h2>
                 </div>
-                <div class="order-1 bg-white rounded-lg w-5/12 p-6 timeline-card border-phase-4">
-                    <h3 class="font-bold text-slate-800 text-2xl mb-3">Karate with Sandy</h3>
-                    <p class="text-sm leading-snug tracking-wide text-slate-600">Putting your app through a Texas-style stress test with k6 and practicing some Ka-Ra-Te (Chaos Engineering) to make it stronger.</p>
+                 <div class="order-1 w-5/12 timeline-card-container">
+                    <div class="timeline-card-inner">
+                        <div class="timeline-card timeline-card-front border-phase-4">
+                            <h3 class="font-bold text-slate-800 text-2xl mb-2">Karate with Sandy</h3>
+                            <p class="text-sm leading-snug text-slate-600">Putting your app through a Texas-style stress test with k6.</p>
+                             <p class="text-xs text-center mt-4 font-bold opacity-60">Click to Flip!</p>
+                        </div>
+                        <div class="timeline-card timeline-card-back border-phase-4">
+                            <h4 class="font-bold text-lg mb-2">HI-YAH! Moveset:</h4>
+                             <ul class="text-xs list-disc list-inside text-slate-700 space-y-1">
+                                <li>Install k6 and write a basic test script.</li>
+                                <li>Run a load test against your app.</li>
+                                <li>Watch metrics in Dynatrace during the test.</li>
+                                <li>Delete a Pod with `kubectl delete`.</li>
+                                <li>Observe how Kubernetes self-heals.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -155,12 +210,35 @@
                 <div class="z-20 flex items-center order-1 bg-phase-5 shadow-xl w-20 h-20 rounded-full timeline-dot">
                     <h2 class="mx-auto font-semibold text-4xl text-white">5</h2>
                 </div>
-                <div class="order-1 bg-white rounded-lg w-5/12 p-6 timeline-card border-phase-5">
-                    <h3 class="font-bold text-slate-800 text-2xl mb-3">Plankton's Evil Plans</h3>
-                    <p class="text-sm leading-snug tracking-wide text-slate-600">Using the genius of Terraform, Ansible, and GitOps to build a master plan that automates your entire Chum Bucket... I mean, Krusty Krab!</p>
+                <div class="order-1 w-5/12 timeline-card-container">
+                    <div class="timeline-card-inner">
+                        <div class="timeline-card timeline-card-front border-phase-5">
+                            <h3 class="font-bold text-slate-800 text-2xl mb-2">Plankton's Evil Plans</h3>
+                            <p class="text-sm leading-snug text-slate-600">Using Terraform & GitOps to automate your Krusty Krab!</p>
+                             <p class="text-xs text-center mt-4 font-bold opacity-60">Click to Flip!</p>
+                        </div>
+                        <div class="timeline-card timeline-card-back border-phase-5">
+                             <h4 class="font-bold text-lg mb-2">The Master Plan:</h4>
+                             <ul class="text-xs list-disc list-inside text-slate-700 space-y-1">
+                                <li>Write a Terraform file to deploy AKS.</li>
+                                <li>Use the `terraform plan` & `apply` workflow.</li>
+                                <li>Learn Ansible basics for configuration.</li>
+                                <li>Set up a Git repo for your YAML files.</li>
+                                <li>Explore a GitOps tool like Argo CD.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.timeline-card-container').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('is-flipped');
+            });
+        });
+    </script>
 </body>
 </html>
